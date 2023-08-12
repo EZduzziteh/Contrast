@@ -1,2 +1,2 @@
 # Contrast
- 1 Bit Game Jam Entry
+ 1 Bit Jam Entry
