@@ -59,16 +59,11 @@ public class PlayerControl : NetworkBehaviour
             Jump();
         }
 
-        //update camera to follow player
-        UpdateCameraPosition();
+    
         
     }
 
-    private void UpdateCameraPosition()
-    {
-        Camera.main.transform.position = new Vector3(transform.position.x, transform.position.y, mainCamera.transform.position.z);
-
-    }
+   
     private void Jump()
     {
         
