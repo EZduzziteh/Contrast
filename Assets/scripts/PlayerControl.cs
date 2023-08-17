@@ -25,11 +25,14 @@ public class PlayerControl : NetworkBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D collider;
 
+    private bool canSwitch;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "switch")
         {
             interactTextMesh.SetActive(true);
+            canSwitch = true;
         }
     }
 
@@ -38,6 +41,7 @@ public class PlayerControl : NetworkBehaviour
         if (collision.tag == "switch")
         {
             interactTextMesh.gameObject.SetActive(false);
+            canSwitch = false;
         }
     }
 
@@ -75,6 +79,11 @@ public class PlayerControl : NetworkBehaviour
         if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
         {
             Jump();
+        }
+
+        if (Input.GetButtonDown("Switch") && canSwitch)
+        {
+            LightDarkManager.instance.ModeSwap();
         }
         //if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
         //{
