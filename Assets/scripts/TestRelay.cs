@@ -36,10 +36,7 @@ public class TestRelay : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        Debug.Log(joinCodeInputField.text);
-    }
+ 
 
 
     public void ConnectToRelay()

@@ -25,6 +25,8 @@ public class PlayerControl : NetworkBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D collider;
 
+    Vector3 lastCheckPoint;
+
     bool isOnLadder = false;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -37,9 +39,18 @@ public class PlayerControl : NetworkBehaviour
         if(collision.tag == "ladder")
         {
             isOnLadder = true;
-            Debug.Log("on ladder");
             rb.velocity = Vector3.zero;
             rb.gravityScale = 0.0f;
+        }
+
+        if (collision.tag == "deathBox")
+        {
+            transform.position = lastCheckPoint;
+        }
+
+        if (collision.tag == "checkPoint")
+        {
+            lastCheckPoint = collision.transform.position;
         }
     }
 
@@ -54,7 +65,6 @@ public class PlayerControl : NetworkBehaviour
             isOnLadder = false;
 
             rb.gravityScale = 1.0f;
-            Debug.Log("off ladder");
         }
     }
 
@@ -63,6 +73,7 @@ public class PlayerControl : NetworkBehaviour
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
+        lastCheckPoint = transform.position;
     }
     public override void OnNetworkSpawn()
     {

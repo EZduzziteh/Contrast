@@ -6,6 +6,8 @@ TagManager:
   tags:
   - switch
   - ladder
+  - deathBox
+  - checkPoint
   layers:
   - Default
   - TransparentFX
