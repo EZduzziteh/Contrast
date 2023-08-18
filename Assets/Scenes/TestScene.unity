@@ -6226,16 +6226,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 547530052}
     - target: {fileID: 2688188060536694922, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 36.4487
+      objectReference: {fileID: 0}
+    - target: {fileID: 2688188060536694922, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -1.88
       objectReference: {fileID: 0}
     - target: {fileID: 2688188060536694922, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 5.51
+      value: 5.9374
       objectReference: {fileID: 0}
     - target: {fileID: 6158558476910672619, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
       propertyPath: m_Name
       value: Menu Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6190306175802063012, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
+      propertyPath: m_margin.w
+      value: 2.7556887
       objectReference: {fileID: 0}
     - target: {fileID: 6524098649669180548, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
       propertyPath: m_Pivot.x
@@ -6299,11 +6307,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6524098649669180548, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 6524098649669180548, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.18
       objectReference: {fileID: 0}
     - target: {fileID: 6524098649669180548, guid: 38480e724d19f0a4cac8161780c1a9fa, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6812,7 +6820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTurnedOn:
-    m_InternalValue: 0
+    m_InternalValue: 1
 --- !u!114 &8227243512924631323
 MonoBehaviour:
   m_ObjectHideFlags: 0

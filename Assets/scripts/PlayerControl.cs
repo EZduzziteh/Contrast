@@ -122,10 +122,11 @@ public class PlayerControl : NetworkBehaviour
 
         if (Input.GetButtonDown("Interact"))
         {
+            Debug.Log("try interact");
             //try to interact with interactable
             if (currentInteractable != null)
             {
-                currentInteractable.InteractServerRpc();
+                this.currentInteractable.InteractServerRpc();
             }
         }
 
