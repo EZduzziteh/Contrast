@@ -4,6 +4,9 @@ using Unity.Netcode;
 using Unity.Netcode.Components;
 using UnityEngine;
 using TMPro;
+
+
+
 public class PlayerControl : NetworkBehaviour
 {
     [SerializeField]
@@ -27,10 +30,32 @@ public class PlayerControl : NetworkBehaviour
 
     Interactable currentInteractable;
 
+    [Tooltip("True if platform should be moving.")]
+    public NetworkVariable<bool> isWhitePlayer = new NetworkVariable<bool>();
+
+
     Vector3 lastCheckPoint;
 
     bool isOnLadder = false;
 
+
+    private void OnValueChanged(bool previousValue, bool newValue)
+    {
+        isWhitePlayer.Value = newValue;
+        Debug.Log(isWhitePlayer.Value);
+
+        if (isWhitePlayer.Value == true)
+        {
+            GetComponent<SpriteRenderer>().color = Color.white;
+        }
+        else
+        {
+            GetComponent<SpriteRenderer>().color = Color.black;
+        }
+       
+    }
+
+    
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "switch")
@@ -71,66 +96,86 @@ public class PlayerControl : NetworkBehaviour
         }
     }
 
-    private void Initialize()
+
+    [ServerRpc(RequireOwnership = false)]
+    private void InitializeServerRpc()
     {
         mainCamera = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<BoxCollider2D>();
         lastCheckPoint = transform.position;
+        if (!IsHost)
+        {
+            Debug.Log("not host");
+            isWhitePlayer.Value = true;
+            GetComponent<SpriteRenderer>().color = Color.white;
+           
+        }
+        else
+        {
+            Debug.Log("host");
+            isWhitePlayer.Value= false;
+            GetComponent<SpriteRenderer>().color = Color.black;
+        }
     }
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        Initialize();
+        InitializeServerRpc();
     }
 
     // Update is called once per frame
     void Update()
     {
-        //return if input is not from the controlled players client
-        if (!Application.isFocused) return;
-
-        //otherwise, handle player inputs
-        HandleMovement();
-
-        if (IsGrounded())
-            coyoteTimeCounter = coyoteTime;
-        else
-            coyoteTimeCounter -= Time.deltaTime;
-
-        if (Input.GetButtonDown("Jump"))
-            jumpBufferCounter = jumpBufferTime;
-        else
-            jumpBufferCounter -= Time.deltaTime;
-
-        if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
+        
+        if (IsLocalPlayer)
         {
-            Jump();
-        }
-        //if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
-        //{
-        //    Debug.Log(jumpBufferCounter);
-        //    rb.velocity = new Vector2(rb.velocity.x, jumpForce*0.05f);
-        //    jumpBufferCounter = 0f;
-        //}
-        //
-        //if(Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
-        //{
-        //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
-        //    coyoteTimeCounter = 0f;
-        //}
+            //return if input is not from the controlled players client
+           // if (!Application.isFocused) return;
 
-        if (Input.GetButtonDown("Interact"))
-        {
-            Debug.Log("try interact");
-            //try to interact with interactable
-            if (currentInteractable != null)
+            //otherwise, handle player inputs
+            HandleMovement();
+
+            if (IsGrounded())
+                coyoteTimeCounter = coyoteTime;
+            else
+                coyoteTimeCounter -= Time.deltaTime;
+
+            if (Input.GetButtonDown("Jump"))
+                jumpBufferCounter = jumpBufferTime;
+            else
+                jumpBufferCounter -= Time.deltaTime;
+
+            if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
             {
-                this.currentInteractable.InteractServerRpc();
+                Jump();
             }
-        }
+            //if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f)
+            //{
+            //    Debug.Log(jumpBufferCounter);
+            //    rb.velocity = new Vector2(rb.velocity.x, jumpForce*0.05f);
+            //    jumpBufferCounter = 0f;
+            //}
+            //
+            //if(Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+            //{
+            //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            //    coyoteTimeCounter = 0f;
+            //}
 
-    
+
+            if (Input.GetButtonDown("Interact"))
+            {
+                Debug.Log(NetworkManager.Singleton.IsHost);
+                //Debug.Log("try interact");
+                //try to interact with interactable
+                if (currentInteractable != null)
+                {
+                    this.currentInteractable.InteractServerRpc();
+                }
+            }
+
+        }
         
     }
 

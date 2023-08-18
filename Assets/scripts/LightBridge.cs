@@ -12,6 +12,8 @@ public class LightBridge : NetworkBehaviour
     {
         base.OnNetworkSpawn();
         isTurnedOn.OnValueChanged += OnValueChanged;
+        isTurnedOn.Value = false; 
+        gameObject.SetActive(false);
     }
 
     private void OnValueChanged(bool previousValue, bool newValue)

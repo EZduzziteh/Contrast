@@ -9,5 +9,6 @@ public class LD_Switch : Interactable
     public override void InteractServerRpc()
     {
         LightDarkManager.instance.SwitchModes();
+        base.InteractServerRpc();
     }
 }

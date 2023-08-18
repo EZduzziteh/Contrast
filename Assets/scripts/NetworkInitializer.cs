@@ -10,12 +10,17 @@ public class NetworkInitializer : MonoBehaviour
         NetworkManager.Singleton.StartClient();
     }
 
+  
+
     public void StartServer()
     {
         NetworkManager.Singleton.StartServer();
+
     }
     public void StartHost()
     {
         NetworkManager.Singleton.StartHost();
     }
+
+    
 }

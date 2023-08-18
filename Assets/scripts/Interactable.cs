@@ -17,7 +17,7 @@ public class Interactable : NetworkBehaviour {
     [ServerRpc(RequireOwnership = false)]
     public virtual void InteractServerRpc()
     {
-        Debug.Log("interacting with"+this.gameObject);
+       // Debug.Log("interacting with"+this.gameObject);
     }
 
     
