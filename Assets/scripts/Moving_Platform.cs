@@ -6,7 +6,8 @@ using UnityEngine.UIElements;
 
 public class Moving_Platform : MonoBehaviour
 {
-
+    [Tooltip("True if platform should be moving.")]
+    public bool isFrozen = false;
     [SerializeField]
     [Tooltip("Whether the platform moves horizontally or vertically.")]
     bool isMovingUp = false;
@@ -42,49 +43,52 @@ public class Moving_Platform : MonoBehaviour
 
     }
 
-    
-    
+
+
     private void Update()
     {
-        if (isReversed)
+        if (!isFrozen)
         {
-            transform.position -= moveDirection * moveSpeed * Time.deltaTime;
-
-            if (isMovingUp)
+            if (isReversed)
             {
-                if(transform.position.y < startPosition.y)
-                {
-                    isReversed = false;
+                transform.position -= moveDirection * moveSpeed * Time.deltaTime;
 
+                if (isMovingUp)
+                {
+                    if (transform.position.y < startPosition.y)
+                    {
+                        isReversed = false;
+
+                    }
+                }
+                else
+                {
+                    if (transform.position.x < startPosition.x)
+                    {
+                        isReversed = false;
+                    }
                 }
             }
             else
             {
-                if (transform.position.x < startPosition.x)
-                {
-                    isReversed = false;
-                }
-            }
-        }
-        else
-        {
-            transform.position += moveDirection * moveSpeed * Time.deltaTime;
+                transform.position += moveDirection * moveSpeed * Time.deltaTime;
 
-            if (isMovingUp)
-            {
-                if (transform.position.y > endPosition.y)
+                if (isMovingUp)
                 {
-                    isReversed = true;
+                    if (transform.position.y > endPosition.y)
+                    {
+                        isReversed = true;
+                    }
                 }
-            }
-            else
-            {
-                if (transform.position.x > endPosition.x)
+                else
                 {
-                    isReversed = true;
+                    if (transform.position.x > endPosition.x)
+                    {
+                        isReversed = true;
+                    }
                 }
-            }
 
+            }
         }
     }
 

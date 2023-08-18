@@ -25,6 +25,8 @@ public class PlayerControl : NetworkBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D collider;
 
+    Interactable currentInteractable;
+
     Vector3 lastCheckPoint;
 
     bool isOnLadder = false;
@@ -34,6 +36,7 @@ public class PlayerControl : NetworkBehaviour
         if (collision.tag == "switch")
         {
             interactTextMesh.SetActive(true);
+            currentInteractable = collision.GetComponent<Interactable>();
         }
 
         if(collision.tag == "ladder")
@@ -58,6 +61,7 @@ public class PlayerControl : NetworkBehaviour
         if (collision.tag == "switch")
         {
             interactTextMesh.gameObject.SetActive(false);
+            currentInteractable = null;
         }
         if (collision.tag == "ladder")
         {
@@ -115,6 +119,15 @@ public class PlayerControl : NetworkBehaviour
         //    rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         //    coyoteTimeCounter = 0f;
         //}
+
+        if (Input.GetButtonDown("Interact"))
+        {
+            //try to interact with interactable
+            if (currentInteractable != null)
+            {
+                currentInteractable.Interact();
+            }
+        }
 
     
         
