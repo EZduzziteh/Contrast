@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Unity.Netcode;
+using System;
 
-public class Moving_Platform : MonoBehaviour
+public class Moving_Platform : NetworkBehaviour
 {
     [Tooltip("True if platform should be moving.")]
-    public bool isFrozen = false;
+    public NetworkVariable<bool> isFrozen = new NetworkVariable<bool>();
+    
+    
     [SerializeField]
     [Tooltip("Whether the platform moves horizontally or vertically.")]
     bool isMovingUp = false;
@@ -25,6 +29,17 @@ public class Moving_Platform : MonoBehaviour
 
     [Tooltip("The farthest position that the platform can go to before reversing. Note: if platform moves horizontally, only the 'x' value of this transform is used.")]
     Vector3 endPosition;
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        isFrozen.OnValueChanged += OnValueChanged;
+    }
+
+    private void OnValueChanged(bool previousValue, bool newValue)
+    {
+        isFrozen.Value = newValue;
+    }
 
     private void Start()
     {
@@ -47,7 +62,7 @@ public class Moving_Platform : MonoBehaviour
 
     private void Update()
     {
-        if (!isFrozen)
+        if (!isFrozen.Value)
         {
             if (isReversed)
             {

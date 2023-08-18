@@ -125,7 +125,7 @@ public class PlayerControl : NetworkBehaviour
             //try to interact with interactable
             if (currentInteractable != null)
             {
-                currentInteractable.Interact();
+                currentInteractable.InteractServerRpc();
             }
         }
 

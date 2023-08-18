@@ -1,31 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.Netcode;
 
 public class FlashLight : Interactable
 {
     [SerializeField]
-    GameObject lightBridge;
+    LightBridge lightBridge;
 
 
-
+    
     public void ToggleLightBridge()
     {
-        if (lightBridge.activeInHierarchy)
+        if (lightBridge.isTurnedOn.Value == true)
         {
-            lightBridge.SetActive(false);
+           
+            lightBridge.isTurnedOn.Value = false;
         }
         else
         {
 
-            lightBridge.SetActive(true);
+            lightBridge.isTurnedOn.Value = true;
         }
     }
 
 
-
-    public override void Interact()
+    [ServerRpc(RequireOwnership = false)]
+    public override void InteractServerRpc()
     {
         ToggleLightBridge();
+    }
+
+    public override void OnNetworkSpawn()
+    {
+        base.OnNetworkSpawn();
+        
     }
 }
