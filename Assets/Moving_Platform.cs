@@ -8,8 +8,10 @@ public class Moving_Platform : MonoBehaviour
 {
 
     [SerializeField]
+    [Tooltip("Whether the platform moves horizontally or vertically.")]
     bool isMovingUp = false;
     [SerializeField]
+    [Tooltip("How fast the platform moves")]
     float moveSpeed;
 
     Vector3 moveDirection;
@@ -17,7 +19,10 @@ public class Moving_Platform : MonoBehaviour
     bool isReversed = false;
 
     Vector3 startPosition;
+
     [SerializeField]
+
+    [Tooltip("The farthest position that the platform can go to before reversing. Note: if platform moves horizontally, only the 'x' value of this transform is used.")]
     Vector3 endPosition;
 
     private void Start()

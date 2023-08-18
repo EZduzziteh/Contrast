@@ -45,14 +45,13 @@ public class PlayerControl : NetworkBehaviour
 
         if (collision.tag == "deathBox")
         {
-            transform.position = lastCheckPoint;
+            ResetPosition();
         }
 
-        if (collision.tag == "checkPoint")
-        {
-            lastCheckPoint = collision.transform.position;
-        }
+       
     }
+
+    
 
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -144,5 +143,15 @@ public class PlayerControl : NetworkBehaviour
         //Debug.DrawRay(collider.bounds.center + new Vector3(collider.bounds.e)
         return rayHit.collider != null;
     }
-  
+    public void ResetPosition()
+    {
+        transform.position = lastCheckPoint;
+    }
+
+    public void setCheckPoint(CheckPoint checkpoint)
+    {
+        lastCheckPoint = checkpoint.transform.position;
+    }
+
+
 }

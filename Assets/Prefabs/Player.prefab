@@ -17,9 +17,9 @@ GameObject:
   - component: {fileID: 2563678863518518577}
   - component: {fileID: -8177368814739278234}
   - component: {fileID: 8386629489957432933}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,6 +111,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   coyoteTime: 0.2
+  jumpBufferTime: 0.5
 --- !u!114 &2282515877502669405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,7 +269,7 @@ GameObject:
   - component: {fileID: 2886248229582543979}
   - component: {fileID: 4794608278680513247}
   - component: {fileID: 5740935661371754059}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Interact Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
