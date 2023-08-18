@@ -25,11 +25,21 @@ public class PlayerControl : NetworkBehaviour
     private Rigidbody2D rb;
     private BoxCollider2D collider;
 
+    bool isOnLadder = false;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "switch")
         {
             interactTextMesh.SetActive(true);
+        }
+
+        if(collision.tag == "ladder")
+        {
+            isOnLadder = true;
+            Debug.Log("on ladder");
+            rb.velocity = Vector3.zero;
+            rb.gravityScale = 0.0f;
         }
     }
 
@@ -38,6 +48,13 @@ public class PlayerControl : NetworkBehaviour
         if (collision.tag == "switch")
         {
             interactTextMesh.gameObject.SetActive(false);
+        }
+        if (collision.tag == "ladder")
+        {
+            isOnLadder = false;
+
+            rb.gravityScale = 1.0f;
+            Debug.Log("off ladder");
         }
     }
 
@@ -104,6 +121,10 @@ public class PlayerControl : NetworkBehaviour
     private void HandleMovement()
     {
         transform.Translate(Input.GetAxis("Horizontal") * transform.right * moveSpeed * Time.deltaTime);
+        if (isOnLadder)
+        {
+            transform.Translate(Input.GetAxis("Vertical") * transform.up * moveSpeed * Time.deltaTime);
+        }
     }
     private bool IsGrounded()
     {
